@@ -1,60 +1,181 @@
-<p align="center">
-    <a href="https://github.com/yiisoft" target="_blank">
-        <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
-    </a>
-    <h1 align="center">Yii 2 Advanced Project Template</h1>
-    <br>
-</p>
+Примеры запросов и ответов postman
 
-Yii 2 Advanced Project Template is a skeleton [Yii 2](https://www.yiiframework.com/) application best for
-developing complex Web applications with multiple tiers.
+МЕТОД GET
+ЗАПРОС http://yiiapi/api/web/v1/requests
+ОТВЕТ {
+    "success": true,
+    "data": [
+        {
+            "id": "1",
+            "name": "test",
+            "email": "test@test.ru",
+            "status": "active",
+            "message": "проверка задачи",
+            "comment": null,
+            "created_at": "2023-08-22 00:00:00",
+            "updated_at": "0000-00-00 00:00:00"
+        },
+        {
+            "id": "2",
+            "name": "subziro",
+            "email": "trust@gmail.com",
+            "status": "resolved",
+            "message": "проверка даты и времени",
+            "comment": "все работает",
+            "created_at": "2023-08-22 11:05:56",
+            "updated_at": "2023-08-22 11:11:23"
+        },
+        {
+            "id": "4",
+            "name": null,
+            "email": null,
+            "status": "resolved",
+            "message": null,
+            "comment": null,
+            "created_at": "2023-08-22 11:07:47",
+            "updated_at": "2023-08-22 11:08:54"
+        },
+        {
+            "id": "5",
+            "name": null,
+            "email": null,
+            "status": "active",
+            "message": null,
+            "comment": null,
+            "created_at": "2023-08-22 18:49:24",
+            "updated_at": "0000-00-00 00:00:00"
+        }
+    ]
+}
 
-The template includes three tiers: front end, back end, and console, each of which
-is a separate Yii application.
+запрос http://yiiapi/api/web/v1/requests/12
+ответ {
+    "success": true,
+    "data": {
+        "id": "12",
+        "name": "testing",
+        "email": "gnom@mail.ru",
+        "status": "active",
+        "message": "\"проверка встаки новой задачи с пробелами\"",
+        "comment": null,
+        "created_at": "2023-08-22 19:22:27",
+        "updated_at": "0000-00-00 00:00:00"
+    }
+}
 
-The template is designed to work in a team development environment. It supports
-deploying the application in different environments.
+запрос http://yiiapi/api/web/v1/requests/12212121
+ответ {
+    "success": true,
+    "data": null
+}
 
-Documentation is at [docs/guide/README.md](docs/guide/README.md).
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![build](https://github.com/yiisoft/yii2-app-advanced/workflows/build/badge.svg)](https://github.com/yiisoft/yii2-app-advanced/actions?query=workflow%3Abuild)
+запрос http://yiiapi/api/web/v1/requests/12zxczxczxcvadxcvasd
+ответ {
+    "success": false,
+    "error": "Номера заявок имеют только цифры",
+    "param": {
+        "id": "12zxczxczxcvadxcvasd"
+    },
+    "method": "GET"
+}
+фильтрация по статусу (active, resolved)
+запрос http://yiiapi/api/web/v1/requests?filter=active
+ответ {
+    "success": true,
+    "data": [
+        {
+            "id": "1",
+            "name": "test",
+            "email": "test@test.ru",
+            "status": "active",
+            "message": "проверка задачи",
+            "comment": null,
+            "created_at": "2023-08-22 00:00:00",
+            "updated_at": "0000-00-00 00:00:00"
+        },
+        {
+            "id": "13",
+            "name": "div",
+            "email": "gnoxm@mail.ru",
+            "status": "active",
+            "message": "тестовая проверка",
+            "comment": null,
+            "created_at": "2023-08-22 19:48:43",
+            "updated_at": "0000-00-00 00:00:00"
+        }
+    ]
+}
 
-DIRECTORY STRUCTURE
--------------------
 
-```
-common
-    config/              contains shared configurations
-    mail/                contains view files for e-mails
-    models/              contains model classes used in both backend and frontend
-    tests/               contains tests for common classes    
-console
-    config/              contains console configurations
-    controllers/         contains console controllers (commands)
-    migrations/          contains database migrations
-    models/              contains console-specific model classes
-    runtime/             contains files generated during runtime
-backend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains backend configurations
-    controllers/         contains Web controller classes
-    models/              contains backend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for backend application    
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-frontend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains frontend configurations
-    controllers/         contains Web controller classes
-    models/              contains frontend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for frontend application
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-    widgets/             contains frontend widgets
-vendor/                  contains dependent 3rd-party packages
-environments/            contains environment-based overrides
-```
+МЕТОД POST
+запрос http://yiiapi/api/web/v1/requests?name=testing&&email=gnom@mail.ru
+ответ {
+    "success": false,
+    "error": "Для обработки задачи требуется имя и email пользователя, а также сообщение",
+    "param": {
+        "name": "testing",
+        "email": "gnom@mail.ru"
+    },
+    "method": "POST"
+}
+
+запрос http://yiiapi/api/web/v1/requests?name=div&&email=gnoxm@mail.ru&&message=тестовая проверка
+ответ {
+    "success": true,
+    "data": "Задача с номером 13 создана."
+}
+
+
+
+МЕТОД PUT
+запрос http://yiiapi/api/web/v1/requests/13?comment=проверка 13
+ответ {
+    "success": true,
+    "data": "ok"
+   }
+   
+запрос http://yiiapi/api/web/v1/requests/13
+ответ {
+    "success": false,
+    "error": "Для ответа на конкретную задачу требуется id задачи и заполненый комментарий",
+    "param": {
+        "id": "13"
+    },
+    "method": "PUT"
+}
+
+запрос http://yiiapi/api/web/v1/requests
+ответ{
+    "success": false,
+    "error": "Для ответа на конкретную задачу требуется id задачи и заполненый комментарий",
+    "param": [],
+    "method": "PUT"
+}   
+
+МЕТОД DELETE
+запрос http://yiiapi/api/web/v1/requests
+ответ {
+    "success": false,
+    "error": "Для удаления требуется id записи",
+    "param": [],
+    "method": "DELETE"
+}
+
+запрос http://yiiapi/api/web/v1/requests/123214214
+ответ {
+    "success": false,
+    "error": "Задача с номером 123214214 не существует. удалить не возможно",
+    "param": {
+        "id": "123214214"
+    },
+    "method": "DELETE"
+}
+
+запрос http://yiiapi/api/web/v1/requests/10
+ответ {
+    "success": true,
+    "data": "удалена"
+}
+
+
